@@ -260,6 +260,10 @@ function Gallery() {
 }
 
 export default function WeddingInvitation() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const guestPrefix = searchParams.get('prefix');
+  const guestName = searchParams.get('name');
+
   const [hasStarted, setHasStarted] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -544,6 +548,12 @@ export default function WeddingInvitation() {
                   transition={{ delay: 0.15, duration: 0.8 }}
                   className="mt-10"
                 >
+                  {guestName && (
+                    <div className="mb-8 flex flex-col items-center">
+                      <p className="text-3xl md:text-4xl text-[#c44576] font-bold mb-2" style={{ fontFamily: "'Great Vibes', 'Noto Sans Sinhala', cursive" }}>{guestPrefix} {guestName}</p>
+                      <p className="text-base md:text-lg text-slate-700 tracking-widest font-semibold">ගෞරවයෙන් ආරාධනා කර සිටිමු</p>
+                    </div>
+                  )}
                   <h1 className="text-6xl sm:text-7xl md:text-8xl text-slate-800 italic leading-none drop-shadow-[0_0_15px_rgba(255,255,255,0.9)]">
                     {INVITATION.couple.bride}
                   </h1>
