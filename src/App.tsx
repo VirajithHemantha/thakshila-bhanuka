@@ -34,7 +34,7 @@ const googleScriptUrl =
   "https://script.google.com/macros/s/AKfycby0MIr0BBQnwPVhIqLk-nOvRaJ71vY8MABRm3wLiE5vnlcD6QpbGasYHEWDpSsLZqRM/exec";
 
 const publicImagePath = (fileName: string) => `/images/${fileName.replaceAll(" ", "%20")}`;
-const preImagePath = (fileName: string) => `/pre/${fileName.replaceAll(" ", "%20")}`;
+const preImagePath = (fileName: string) => `/pre-optimized/${fileName.replaceAll(" ", "%20")}`;
 
 const PRE_IMAGES = [
   preImagePath("PAN00225.JPG.jpeg"),
