@@ -34,7 +34,7 @@ const googleScriptUrl =
   "https://script.google.com/macros/s/AKfycby0MIr0BBQnwPVhIqLk-nOvRaJ71vY8MABRm3wLiE5vnlcD6QpbGasYHEWDpSsLZqRM/exec";
 
 const publicImagePath = (fileName: string) => `/images/${fileName.replaceAll(" ", "%20")}`;
-const preImagePath = (fileName: string) => `/pre-optimized/${fileName.replaceAll(" ", "%20")}`;
+const preImagePath = (fileName: string) => `/pre/${fileName.replaceAll(" ", "%20")}`;
 
 const PRE_IMAGES = [
   preImagePath("PAN00225.JPG.jpeg"),
@@ -199,20 +199,7 @@ function CountdownTimer({ isDark = false }: { isDark?: boolean }) {
 }
 
 function Gallery() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-
-    const updateMatch = () => setIsMobile(mediaQuery.matches);
-
-    updateMatch();
-    mediaQuery.addEventListener("change", updateMatch);
-
-    return () => mediaQuery.removeEventListener("change", updateMatch);
-  }, []);
-
-  const galleryImages = isMobile ? PRE_IMAGES : [...PRE_IMAGES, ...PRE_IMAGES, ...PRE_IMAGES];
+  const marqueeImages = [...PRE_IMAGES, ...PRE_IMAGES, ...PRE_IMAGES];
 
   return (
     <section className="relative py-14 md:py-40 bg-transparent overflow-hidden">
@@ -237,61 +224,35 @@ function Gallery() {
           </p>
         </motion.div>
 
-        <div className={isMobile ? "relative w-full py-4" : "relative flex overflow-x-hidden w-full py-4 mask-gradient"}>
-          {isMobile ? (
-            <div
-              className="flex gap-4 px-6 pb-2 overflow-x-auto snap-x snap-mandatory"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
-            >
-              {galleryImages.map((img, i) => (
-                <div
-                  key={`${img}-${i}`}
-                  className="relative w-[76vw] max-w-[290px] h-[360px] shrink-0 overflow-hidden rounded-[2rem] shadow-[0_18px_40px_-16px_rgba(140,36,76,0.18)] border border-pink-100/40 snap-center group"
-                >
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 z-10" />
-                  <img
-                    src={img}
-                    alt=""
-                    className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
-                    loading={i < 2 ? "eager" : "lazy"}
-                    decoding="async"
-                    draggable={false}
-                  />
-                  <div className="absolute inset-3 border border-white/20 rounded-[1.5rem] z-20 pointer-events-none transition-all duration-700" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <motion.div
-              className="flex gap-6 md:gap-10 pr-6 md:pr-10 shrink-0"
-              animate={{
-                x: [0, "-33.33%"],
-              }}
-              transition={{
-                ease: "linear",
-                duration: 25,
-                repeat: Infinity,
-              }}
-            >
-              {galleryImages.map((img, i) => (
-                <div
-                  key={`${img}-${i}`}
-                  className="relative w-[280px] h-[380px] md:w-[350px] md:h-[480px] shrink-0 overflow-hidden rounded-[2.5rem] shadow-[0_20px_50px_-15px_rgba(140, 36, 76, 0.15)] border border-pink-100/30 group"
-                >
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 z-10" />
-                  <img
-                    src={img}
-                    alt=""
-                    className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
-                    loading="eager"
-                    decoding="async"
-                    draggable={false}
-                  />
-                  <div className="absolute inset-4 border border-white/20 rounded-[2rem] z-20 pointer-events-none group-hover:inset-6 transition-all duration-700" />
-                </div>
-              ))}
-            </motion.div>
-          )}
+        <div className="relative flex overflow-x-hidden w-full py-4 mask-gradient">
+          <motion.div
+            className="flex gap-6 md:gap-10 pr-6 md:pr-10 shrink-0"
+            animate={{
+              x: [0, "-33.33%"],
+            }}
+            transition={{
+              ease: "linear",
+              duration: 25,
+              repeat: Infinity,
+            }}
+          >
+            {marqueeImages.map((img, i) => (
+              <div
+                key={`${img}-${i}`}
+                className="relative w-[280px] h-[380px] md:w-[350px] md:h-[480px] shrink-0 overflow-hidden rounded-[2.5rem] shadow-[0_20px_50px_-15px_rgba(140, 36, 76, 0.15)] border border-pink-100/30 group"
+              >
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 z-10" />
+                <img
+                  src={img}
+                  alt=""
+                  className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-4 border border-white/20 rounded-[2rem] z-20 pointer-events-none group-hover:inset-6 transition-all duration-700" />
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
