@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 
-const dir = 'e:/QB/wedding/thakshila bhanuka/public/pre-optimized';
+const dir = 'e:/QB/wedding/thakshila bhanuka/public/pre';
 const tinyDir = 'e:/QB/wedding/thakshila bhanuka/public/pre-tiny';
 
 if (!fs.existsSync(tinyDir)) {

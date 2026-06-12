@@ -37,12 +37,12 @@ const publicImagePath = (fileName: string) => `/images/${fileName.replaceAll(" "
 const preImagePath = (fileName: string) => `/pre/${fileName.replaceAll(" ", "%20")}`;
 
 const PRE_IMAGES = [
-  preImagePath("PAN00225.JPG.jpeg"),
-  preImagePath("PAN09855.jpg.jpeg"),
-  preImagePath("PAN09883.jpg.jpeg"),
-  preImagePath("PAN09886.jpg.jpeg"),
-  preImagePath("PAN09969.jpg.jpeg"),
-  preImagePath("WhatsApp Image 2026-05-14 at 00.20.09.jpeg"),
+  preImagePath("WhatsApp Image 2026-06-12 at 22.13.20 (1).jpeg"),
+  preImagePath("WhatsApp Image 2026-06-12 at 22.13.20 (2).jpeg"),
+  preImagePath("WhatsApp Image 2026-06-12 at 22.13.20.jpeg"),
+  preImagePath("WhatsApp Image 2026-06-12 at 22.13.21 (1).jpeg"),
+  preImagePath("WhatsApp Image 2026-06-12 at 22.13.21 (2).jpeg"),
+  preImagePath("WhatsApp Image 2026-06-12 at 22.13.21.jpeg"),
 ];
 
 const HERO_BACKGROUND_IMAGE = PRE_IMAGES[4];
