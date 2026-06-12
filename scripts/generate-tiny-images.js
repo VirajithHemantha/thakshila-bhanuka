@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import Jimp from 'jimp';
+import sharp from 'sharp';
 
 const dir = 'e:/QB/wedding/thakshila bhanuka/public/pre-optimized';
 const tinyDir = 'e:/QB/wedding/thakshila bhanuka/public/pre-tiny';
@@ -18,15 +18,13 @@ async function generateTiny() {
     
     console.log(`Processing ${file}...`);
     try {
-      const image = await Jimp.read(filePath);
-      
-      // Create tiny version
-      image.resize(20, Jimp.AUTO);
-      image.quality(20);
-      image.blur(2);
-      await image.writeAsync(tinyFilePath);
+      await sharp(filePath)
+        .resize(30)
+        .blur(5)
+        .jpeg({ quality: 20 })
+        .toFile(tinyFilePath);
+        
       console.log(`Created tiny version for ${file}`);
-      
     } catch (err) {
       console.error(`Error processing ${file}:`, err);
     }

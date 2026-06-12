@@ -198,6 +198,32 @@ function CountdownTimer({ isDark = false }: { isDark?: boolean }) {
   );
 }
 
+function ProgressiveImage({ src, alt, className }: { src: string; alt?: string; className?: string }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  // Support both /pre-optimized/ and /pre/ paths just in case
+  const tinySrc = src.replace('/pre-optimized/', '/pre-tiny/').replace('/pre/', '/pre-tiny/');
+
+  return (
+    <div className={`relative ${className}`}>
+      {/* Low-quality placeholder */}
+      <img
+        src={tinySrc}
+        alt={alt}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? "opacity-0" : "opacity-100"} blur-md scale-110`}
+      />
+      {/* Full-quality image */}
+      <img
+        src={src}
+        alt={alt}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        onLoad={() => setIsLoaded(true)}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  );
+}
+
 function Gallery() {
   const marqueeImages = [...PRE_IMAGES, ...PRE_IMAGES, ...PRE_IMAGES];
 
@@ -242,12 +268,10 @@ function Gallery() {
                 className="relative w-[280px] h-[380px] md:w-[350px] md:h-[480px] shrink-0 overflow-hidden rounded-[2.5rem] shadow-[0_20px_50px_-15px_rgba(140, 36, 76, 0.15)] border border-pink-100/30 group"
               >
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 z-10" />
-                <img
+                <ProgressiveImage
                   src={img}
                   alt=""
-                  className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
+                  className="w-full h-full transition-transform duration-[2s] group-hover:scale-105"
                 />
                 <div className="absolute inset-4 border border-white/20 rounded-[2rem] z-20 pointer-events-none group-hover:inset-6 transition-all duration-700" />
               </div>
